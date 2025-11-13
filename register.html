@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Registar — Precificador de Crochê</title>
+  <link rel="stylesheet" href="css/home.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Header removed: managed by index.html -->
+    <main>
+      <section class="card" style="max-width:28rem;margin:0 auto;">
+        <h2>Criar Conta</h2>
+        <form id="register-form" onsubmit="handleRegister(event)">
+          <label for="register-username">Usuário:</label>
+          <input id="register-username" type="text" required>
+          <label for="register-email">Email:</label>
+          <input id="register-email" type="email" required>
+          <label for="register-password">Senha:</label>
+          <input id="register-password" type="password" minlength="6" required>
+          <label for="register-confirm-password">Confirmar Senha:</label>
+          <input id="register-confirm-password" type="password" minlength="6" required>
+          <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.5rem;">
+            <button class="btn btn-primary" type="submit">Registar</button>
+            <a class="btn btn-dark" href="login.html" role="button">Já tenho conta</a>
+          </div>
+        </form>
+      </section>
+    </main>
+    <!-- Footer removed: managed by index.html -->
+  </div>
+  <script>
+    (function(){ const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
+    async function handleRegister(e){
+      e.preventDefault();
+      const username = document.getElementById('register-username').value.trim();
+      const email = document.getElementById('register-email').value.trim();
+      const password = document.getElementById('register-password').value;
+      const confirm = document.getElementById('register-confirm-password').value;
+      if(!username){ alert('Informe um nome de usuário válido.'); return; }
+      if(password.length < 6){ alert('A senha deve ter no mínimo 6 caracteres.'); return; }
+      if(password !== confirm){ alert('As senhas não coincidem.'); return; }
+
+      // Exemplo de chamada à API (lembre-se de configurar CORS no backend)
+      try{
+        const res = await fetch(window.API_BASE + '/api/register/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+        const data = await res.json();
+        if(!res.ok) return alert(data.error || 'Erro ao criar conta');
+        alert('Conta criada com sucesso! Tokens salvos.');
+        localStorage.setItem('access_token', data.tokens.access);
+        localStorage.setItem('refresh_token', data.tokens.refresh);
+        location.href = 'calculator.html';
+      }catch(err){
+        console.error(err);
+        alert('Erro ao conectar com a API. Verifique CORS e API_BASE.');
+      }
+    }
+  </script>
+</body>
+</html>

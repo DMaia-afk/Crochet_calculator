@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precificador de Crochê — Home</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-crochet min-h-screen flex items-center justify-center p-6">
+
+    <div class="container">
+
+        <!-- Header removed: managed by index.html -->
+
+        <main>
+            <!-- Navbar removed: navigation is handled by frontend/index.html -->
+
+            <section class="hero">
+                <h2>Bem-vindo(a) ao Seu Auxiliar de Precificação!</h2>
+                <p>Ferramenta essencial para garantir que o seu trabalho artesanal seja valorizado corretamente. Comece já a calcular o preço das suas peças, considerando materiais, tempo e lucro.</p>
+
+                <div class="actions" style="display:flex; flex-direction:column; gap:0.75rem; margin-top:1rem;">
+                    <button onclick="location.href='calculator.html'" class="btn btn-primary" style="width:100%;">
+                        Ir para a Calculadora
+                    </button>
+                    <button onclick="location.href='register.html'" class="btn btn-dark" style="width:100%;">
+                        Criar Conta
+                    </button>
+                </div>
+            </section>
+
+            <section class="grid-3">
+                <div class="card">
+                    <h3>Cálculo Rápido</h3>
+                    <p>Use a calculadora para gerar preços com base em custo, tempo e margem.</p>
+                </div>
+                <div class="card">
+                    <h3>Salve suas Notas</h3>
+                    <p>Registre cada peça com detalhes e recupere-as sempre que quiser.</p>
+                </div>
+                <div class="card">
+                    <h3>Dicas</h3>
+                    <p>Considere o custo real do fio, tempo de produção e despesas extras ao precificar.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer removed: managed by index.html -->
+
+    </div>
+
+    <script>
+        (function(){ const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
+        setTimeout(() => {
+            const auth = document.getElementById('auth-status'); if(auth) auth.textContent = 'Deslogado(a). Faça login para salvar.';
+        }, 400);
+    </script>
+</body>
+</html>
