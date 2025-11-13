@@ -77,7 +77,7 @@
         const token = localStorage.getItem('access_token');
         if(token) headers['Authorization'] = 'Bearer ' + token;
 
-        const res = await fetch(window.API_BASE + '/api/calculate/', {
+        const res = await fetch(window.API_BASE + '/calculate/', {
           method: 'POST',
           headers,
           body: JSON.stringify(data)

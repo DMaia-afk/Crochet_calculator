@@ -45,7 +45,7 @@
 
       // Exemplo de chamada à API (lembre-se de configurar CORS no backend)
       try{
-        const res = await fetch(window.API_BASE + '/api/register/', {
+        const res = await fetch(window.API_BASE + '/register/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, email, password })
