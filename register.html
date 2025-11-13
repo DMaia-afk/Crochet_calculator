@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/home.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <script>
-    window.API_BASE = 'https://crochet-calculator-backend.onrender.com/api';
+    window.API_BASE = 'https://crochet-calculator-backend.onrender.com/api/';
   </script>
 </head>
 <body>
@@ -41,17 +41,17 @@
       const username = document.getElementById('register-username').value.trim();
       const email = document.getElementById('register-email').value.trim();
       const password = document.getElementById('register-password').value;
-      const confirm = document.getElementById('register-confirm-password').value;
+      const password2 = document.getElementById('register-confirm-password').value;
       if(!username){ alert('Informe um nome de usuário válido.'); return; }
       if(password.length < 6){ alert('A senha deve ter no mínimo 6 caracteres.'); return; }
-      if(password !== confirm){ alert('As senhas não coincidem.'); return; }
+      if(password !== password2){ alert('As senhas não coincidem.'); return; }
 
       // Exemplo de chamada à API (lembre-se de configurar CORS no backend)
       try{
-        const res = await fetch(window.API_BASE + '/register/', {
+        const res = await fetch(window.API_BASE + '/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, email, password })
+          body: JSON.stringify({ username, email, password, password2 })
         });
         const data = await res.json();
         if(!res.ok) return alert(data.error || 'Erro ao criar conta');
