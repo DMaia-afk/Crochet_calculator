@@ -60,7 +60,7 @@
   </div>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){ const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
     function formatBR(number){ return 'R$ ' + Number(number).toFixed(2).replace('.', ','); }
     async function handleCalculate(e){
       e.preventDefault();
