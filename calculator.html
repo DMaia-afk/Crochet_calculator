@@ -92,6 +92,33 @@
         document.getElementById('total-cost').textContent = formatBR(result.total_cost);
         document.getElementById('selling-price').textContent = formatBR(result.selling_price);
         document.getElementById('result-area').style.display='block';
+
+        // Salvar como nota
+        const noteData = {
+          title: pieceTitle || 'Cálculo sem título',
+          labor_cost: result.labor_cost,
+          total_cost: result.total_cost,
+          selling_price: result.selling_price,
+          material_cost: materialCost,
+          hours: hours,
+          minutes: minutes,
+          hourly_rate: hourlyRate,
+          fixed_expenses: fixedExpenses,
+          profit_margin: profitMargin
+        };
+        try {
+          const noteHeaders = { 'Content-Type': 'application/json' };
+          const token = localStorage.getItem('access_token');
+          if (token) noteHeaders['Authorization'] = 'Bearer ' + token;
+          await fetch(window.API_BASE + 'notes/', {
+            method: 'POST',
+            headers: noteHeaders,
+            body: JSON.stringify(noteData)
+          });
+          // Opcional: alert('Nota salva!');
+        } catch (err) {
+          console.error('Erro ao salvar nota:', err);
+        }
       }catch(err){
         console.error(err);
         alert('Erro ao conectar com a API. Verifique CORS e API_BASE.');
