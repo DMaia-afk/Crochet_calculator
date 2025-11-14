@@ -53,6 +53,7 @@
           <strong>PREÇO SUGERIDO:</strong>
           <span id="selling-price" style="font-size:1.25rem;font-weight:800;">R$ 0,00</span>
         </div>
+        <button class="btn btn-primary" onclick="saveNote()" style="margin-top:1rem;">Adicionar em Minhas Notas</button>
       </div>
     </main>
 
@@ -62,6 +63,7 @@
   <script>
     (function(){ const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
     function formatBR(number){ return 'R$ ' + Number(number).toFixed(2).replace('.', ','); }
+    let currentNoteData = null;
     async function handleCalculate(e){
       e.preventDefault();
       const pieceTitle = document.getElementById('pieceTitle').value.trim();
@@ -93,8 +95,7 @@
         document.getElementById('selling-price').textContent = formatBR(result.selling_price);
         document.getElementById('result-area').style.display='block';
 
-        // Salvar como nota
-        const noteData = {
+        currentNoteData = {
           title: pieceTitle || 'Cálculo sem título',
           labor_cost: result.labor_cost,
           total_cost: result.total_cost,
@@ -106,22 +107,33 @@
           fixed_expenses: fixedExpenses,
           profit_margin: profitMargin
         };
-        try {
-          const noteHeaders = { 'Content-Type': 'application/json' };
-          const token = localStorage.getItem('access_token');
-          if (token) noteHeaders['Authorization'] = 'Bearer ' + token;
-          await fetch(window.API_BASE + 'notes/', {
-            method: 'POST',
-            headers: noteHeaders,
-            body: JSON.stringify(noteData)
-          });
-          // Opcional: alert('Nota salva!');
-        } catch (err) {
-          console.error('Erro ao salvar nota:', err);
-        }
       }catch(err){
         console.error(err);
         alert('Erro ao conectar com a API. Verifique CORS e API_BASE.');
+      }
+    }
+    async function saveNote(){
+      if (!currentNoteData) {
+        alert('Calcule primeiro.');
+        return;
+      }
+      try {
+        const noteHeaders = { 'Content-Type': 'application/json' };
+        const token = localStorage.getItem('access_token');
+        if (token) noteHeaders['Authorization'] = 'Bearer ' + token;
+        const res = await fetch(window.API_BASE + 'notes/', {
+          method: 'POST',
+          headers: noteHeaders,
+          body: JSON.stringify(currentNoteData)
+        });
+        if (res.ok) {
+          alert('Nota adicionada com sucesso!');
+        } else {
+          alert('Erro ao salvar nota.');
+        }
+      } catch (err) {
+        console.error('Erro ao salvar nota:', err);
+        alert('Erro ao conectar com a API.');
       }
     }
   </script>

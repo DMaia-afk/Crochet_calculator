@@ -6,6 +6,9 @@
   <title>Minhas Notas — Precificador de Crochê</title>
   <link rel="stylesheet" href="css/home.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <script>
+    window.API_BASE = 'https://crochet-calculator-backend.onrender.com/api/';
+  </script>
 </head>
 <body>
   <div class="container">
@@ -13,8 +16,9 @@
     <main>
       <section class="card">
         <h2>Minhas Notas</h2>
+        <button class="btn btn-primary" onclick="loadNotes()" style="margin-bottom:1rem;">Carregar Notas</button>
         <div id="notes-list">
-          <p class="muted">Nenhuma nota encontrada — faça um cálculo e salve para ver suas notas aqui.</p>
+          <p class="muted">Clique em "Carregar Notas" para ver suas anotações.</p>
         </div>
       </section>
     </main>
@@ -22,6 +26,33 @@
   </div>
   <script>
     (function(){ const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
+    async function loadNotes(){
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        alert('Faça login primeiro.');
+        return;
+      }
+      try {
+        const res = await fetch(window.API_BASE + 'notes/', {
+          method: 'GET',
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) {
+          alert('Erro ao carregar notas.');
+          return;
+        }
+        const notes = await res.json();
+        const list = document.getElementById('notes-list');
+        if (notes.length === 0) {
+          list.innerHTML = '<p class="muted">Nenhuma nota encontrada.</p>';
+          return;
+        }
+        list.innerHTML = '<ul>' + notes.map(note => `<li><strong>${note.title}</strong> - Custo Total: R$ ${note.total_cost}, Preço Sugerido: R$ ${note.selling_price}</li>`).join('') + '</ul>';
+      } catch (err) {
+        console.error(err);
+        alert('Erro ao conectar com a API.');
+      }
+    }
   </script>
 </body>
 </html>
