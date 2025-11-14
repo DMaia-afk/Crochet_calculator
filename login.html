@@ -45,7 +45,7 @@
         const res = await fetch(window.API_BASE + 'token/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: email, password })
+          body: JSON.stringify({ email, password })
         });
         const data = await res.json();
         if(!res.ok) return alert(data.detail || 'Erro no login');
