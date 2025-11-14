@@ -55,10 +55,8 @@
         });
         const data = await res.json();
         if(!res.ok) return alert(data.error || 'Erro ao criar conta');
-        alert('Conta criada com sucesso! Tokens salvos.');
-        localStorage.setItem('access_token', data.tokens.access);
-        localStorage.setItem('refresh_token', data.tokens.refresh);
-        location.href = 'calculator.html';
+        alert('Conta criada com sucesso! Faça login para continuar.');
+        location.href = 'login.html';
       }catch(err){
         console.error(err);
         alert('Erro ao conectar com a API. Verifique CORS e API_BASE.');
