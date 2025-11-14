@@ -18,8 +18,8 @@
       <section class="card" style="max-width:28rem;margin:0 auto;">
         <h2>Entrar</h2>
         <form id="login-form" onsubmit="handleLogin(event)">
-          <label for="login-username">Usuário:</label>
-          <input id="login-username" type="text" required>
+          <label for="login-email">Email:</label>
+          <input id="login-email" type="email" required>
           <label for="login-password">Senha:</label>
           <input id="login-password" type="password" required>
           <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.5rem;">
@@ -37,15 +37,15 @@
     (function(){ const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
     async function handleLogin(e){
       e.preventDefault();
-      const username = document.getElementById('login-username').value.trim();
+      const email = document.getElementById('login-email').value.trim();
       const password = document.getElementById('login-password').value;
-      if(!username || !password){ alert('Preencha usuário e senha.'); return; }
+      if(!email || !password){ alert('Preencha email e senha.'); return; }
 
       try{
         const res = await fetch(window.API_BASE + 'token/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password })
+          body: JSON.stringify({ email, password })
         });
         const data = await res.json();
         if(!res.ok) return alert(data.detail || 'Erro no login');
