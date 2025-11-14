@@ -47,7 +47,7 @@
           list.innerHTML = '<p class="muted">Nenhuma nota encontrada.</p>';
           return;
         }
-        list.innerHTML = '<ul>' + notes.map(note => `<li><strong>${note.title}</strong> - Custo Total: R$ ${note.total_cost}, Preço Sugerido: R$ ${note.selling_price}</li>`).join('') + '</ul>';
+        list.innerHTML = '<ul>' + notes.map(note => `<li><strong>${note.title}</strong> - Custo Material: R$ ${note.material_cost}, Horas: ${note.hours}, Valor/Hora: R$ ${note.hourly_rate}, Despesas: R$ ${note.fixed_expenses}, Margem: ${note.profit_margin}%, Preço Sugerido: R$ ${note.total_price}</li>`).join('') + '</ul>';
       } catch (err) {
         console.error(err);
         alert('Erro ao conectar com a API.');
