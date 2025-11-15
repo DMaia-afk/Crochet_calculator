@@ -55,6 +55,10 @@
         setTimeout(() => {
             const auth = document.getElementById('auth-status'); if(auth) auth.textContent = 'Deslogado(a). Faça login para salvar.';
         }, 400);
+        // Ping backend to wake it up
+        window.addEventListener('load', () => {
+            fetch('https://crochet-calculator-backend.onrender.com').catch(() => {});
+        });
     </script>
 </body>
 </html>
