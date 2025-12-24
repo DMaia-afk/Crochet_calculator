@@ -27,6 +27,9 @@
                     <button onclick="location.href='register.html'" class="btn btn-dark" style="width:100%;">
                         Criar Conta
                     </button>
+                    <button onclick="openPopup()" class="btn btn-secondary" style="width:100%;">
+                        🎁 Página Especial
+                    </button>
                 </div>
             </section>
 
@@ -59,6 +62,15 @@
         window.addEventListener('load', () => {
             fetch('https://crochet-calculator-backend.onrender.com').catch(() => {});
         });
+
+        function openPopup() {
+            const secret = prompt("Digite a palavra secreta:");
+            if (secret === "Feliz Natal") {
+                location.href = 'secret.html';
+            } else {
+                alert("Palavra secreta incorreta!");
+            }
+        }
     </script>
 </body>
 </html>
