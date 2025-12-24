@@ -39,6 +39,7 @@
       <button class="btn" onclick="navigate('./notes.html', this)">Minhas Notas</button>
       <button class="btn" onclick="navigate('./login.html', this)">Login</button>
       <button class="btn" onclick="navigate('./register.html', this)">Registar</button>
+      <button class="btn" onclick="openSecretPopup()">🎁 Página Especial</button>
     </nav>
 
     <div style="height:calc(100vh - 220px); border-radius:8px; overflow:hidden; background:white; box-shadow:0 10px 30px rgba(15,23,42,0.06);">
@@ -50,6 +51,16 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    function openSecretPopup() {
+      const secret = prompt("Digite a palavra secreta:");
+      if (secret === "Feliz Natal") {
+        navigate('./secret.html');
+      } else {
+        alert("Palavra secreta incorreta!");
+      }
+    }
+
     function setActive(button){
       const btns = document.querySelectorAll('nav .btn');
       btns.forEach(b=> b.classList.remove('btn-primary'));
